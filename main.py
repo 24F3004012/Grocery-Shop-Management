@@ -2,7 +2,15 @@ from config import APP_NAME
 from routes.inventory import find_product_key, show_inventory
 from routes.cart import CART, display_cart, add_item, update_item, remove_item
 from routes.checkout import checkout
-from routes.customer_billing import show_bill_history
+from routes.customer import show_bill_history
+from routes.owner import (
+    add_new_product,
+    purchase_stock,
+    record_credit_sale_flow,
+    record_payment_flow,
+    show_customers,
+    show_suppliers,
+)
 from utils import get_valid_int
 
 
@@ -76,7 +84,13 @@ def show_menu():
     print("5. View cart")
     print("6. Checkout")
     print("7. View bill history")
-    print("8. Exit")
+    print("8. Record stock purchase")
+    print("9. Record credit sale")
+    print("10. Record credit payment")
+    print("11. Add product")
+    print("12. View customers")
+    print("13. View suppliers")
+    print("14. Exit")
 
 
 def main():
@@ -92,7 +106,13 @@ def main():
             "5": lambda: display_cart(),
             "6": checkout,
             "7": show_bill_history,
-            "8": lambda: print(f"Thanks for visiting {APP_NAME}. Have a great day!") or False,
+            "8": purchase_stock,
+            "9": record_credit_sale_flow,
+            "10": record_payment_flow,
+            "11": add_new_product,
+            "12": show_customers,
+            "13": show_suppliers,
+            "14": lambda: print(f"Thanks for visiting {APP_NAME}. Have a great day!") or False,
         }
 
         action = actions.get(choice)
@@ -101,7 +121,7 @@ def main():
             continue
 
         should_exit = action()
-        if choice == "8":
+        if choice == "14":
             break
         if should_exit is False:
             continue

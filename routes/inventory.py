@@ -1,23 +1,18 @@
-from routes.database import get_products
+from routes.products import DEFAULT_PRODUCTS, get_products
 
 
-INVENTORY = {
-    "apple": {"price": 0.75, "category": "Fruit", "stock": 25},
-    "banana": {"price": 0.60, "category": "Fruit", "stock": 30},
-    "milk": {"price": 2.25, "category": "Dairy", "stock": 18},
-    "bread": {"price": 1.90, "category": "Bakery", "stock": 20},
-    "eggs": {"price": 3.10, "category": "Dairy", "stock": 22},
-    "rice": {"price": 4.50, "category": "Pantry", "stock": 12},
-    "pasta": {"price": 2.80, "category": "Pantry", "stock": 15},
-    "tomato": {"price": 1.10, "category": "Vegetable", "stock": 28},
-    "lettuce": {"price": 1.35, "category": "Vegetable", "stock": 24},
-    "water": {"price": 1.50, "category": "Beverage", "stock": 30},
-}
+INVENTORY = {name: details.copy() for name, details in DEFAULT_PRODUCTS.items()}
 
 
-database_inventory = get_products()
-if database_inventory:
-    INVENTORY = database_inventory
+def refresh_inventory():
+    database_inventory = get_products()
+    if database_inventory:
+        INVENTORY.clear()
+        INVENTORY.update(database_inventory)
+    return INVENTORY
+
+
+refresh_inventory()
 
 
 def show_inventory():

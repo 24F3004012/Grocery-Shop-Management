@@ -1,6 +1,6 @@
 from config import DISCOUNT_RATE, DISCOUNT_THRESHOLD
 from routes.cart import CART, cart_total, display_cart
-from routes.customer_billing import collect_customer_details, create_bill
+from routes.customer import collect_customer_details, create_bill
 
 
 def checkout():
@@ -19,7 +19,7 @@ def checkout():
         print(f"Discount ({DISCOUNT_RATE * 100:.0f}%): -${discount:.2f}")
     print(f"Total: ${total:.2f}")
 
-    collect_customer_details()
+    customer_data = collect_customer_details()
 
     try:
         payment = float(input("Enter amount paid: $"))
@@ -32,7 +32,7 @@ def checkout():
         return False
 
     change = payment - total
-    bill = create_bill(CART.copy(), subtotal, discount, total, payment)
+    bill = create_bill(CART.copy(), subtotal, discount, total, payment, customer_data)
     print(f"Change: ${change:.2f}")
     print("Thank you for shopping with us!")
     print(f"Customer owes: ${bill['total_due']:.2f}")

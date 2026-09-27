@@ -12,9 +12,6 @@ def refresh_inventory():
     return INVENTORY
 
 
-refresh_inventory()
-
-
 def show_inventory():
     print("\n=== Grocery Store Inventory ===")
     print(f"{'#':<3} {'Item':<15} {'Category':<12} {'Price':>8} {'Stock':>8}")

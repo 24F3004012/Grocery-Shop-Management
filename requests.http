@@ -1,0 +1,67 @@
+### Health check
+GET http://localhost:3000/
+
+### Cash sale
+POST http://localhost:3000/sales
+Content-Type: application/json
+
+{
+  "customer_id": null,
+  "items": [
+    { "product_id": 1, "quantity": 1, "unit_price": 25.00 },
+    { "product_id": 2, "quantity": 2, "unit_price": 60.00 }
+  ],
+  "cash_received": 200.00
+}
+
+### Purchase with an existing product
+POST http://localhost:3000/purchases
+Content-Type: application/json
+
+{
+  "supplier_id": 3,
+  "purchase_date": "2026-09-23",
+  "items": [
+    { "product_id": 1, "quantity": 10, "unit_cost": 18.00 }
+  ]
+}
+
+### Purchase with a new product
+POST http://localhost:3000/purchases
+Content-Type: application/json
+
+{
+  "supplier_id": 3,
+  "purchase_date": "2026-09-23",
+  "items": [
+    {
+      "product_name": "Sunflower Oil (1L)",
+      "category_id": 2,
+      "unit": "bottle",
+      "quantity": 20,
+      "unit_cost": 110.00
+    }
+  ]
+}
+
+### Credit sale
+POST http://localhost:3000/credit-sales
+Content-Type: application/json
+
+{
+  "customer_id": 7,
+  "items": [
+    { "product_id": 1, "quantity": 1, "unit_price": 25.00 },
+    { "product_id": 3, "quantity": 2, "unit_price": 60.00 }
+  ]
+}
+
+### Credit payment
+POST http://localhost:3000/credit-payments
+Content-Type: application/json
+
+{
+  "customer_id": 7,
+  "amount_paid": 50.00,
+  "note": "Partial payment"
+}

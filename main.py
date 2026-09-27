@@ -1,5 +1,5 @@
 from config import APP_NAME
-from routes.inventory import find_product_key, show_inventory
+from routes.inventory import find_product_key, refresh_inventory, show_inventory
 from routes.cart import CART, display_cart, add_item, update_item, remove_item
 from routes.checkout import checkout
 from routes.customer import show_bill_history
@@ -94,6 +94,7 @@ def show_menu():
 
 
 def main():
+    refresh_inventory()
     while True:
         show_menu()
         choice = input("Choose an option: ").strip()

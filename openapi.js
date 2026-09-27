@@ -41,6 +41,39 @@ module.exports = {
         responses: { 201: { description: 'Credit payment recorded' }, 400: { description: 'Invalid request' }, 404: { description: 'Customer not found' } },
       },
     },
+    '/products': {
+      get: {
+        summary: 'List inventory products',
+        responses: { 200: { description: 'Products with stock and reorder data' }, 503: { description: 'Inventory unavailable' } },
+      },
+    },
+    '/products/{id}': {
+      patch: {
+        summary: 'Update a product price',
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'integer' } }],
+        requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/ProductPriceUpdate' } } } },
+        responses: { 200: { description: 'Product updated' }, 400: { description: 'Invalid price' }, 404: { description: 'Product not found' } },
+      },
+    },
+    '/suppliers': {
+      get: {
+        summary: 'List suppliers',
+        responses: { 200: { description: 'Suppliers' }, 503: { description: 'Supplier data unavailable' } },
+      },
+    },
+    '/suppliers/{id}': {
+      get: {
+        summary: 'Get a supplier and its purchase history',
+        parameters: [{ name: 'id', in: 'path', required: true, schema: { type: 'integer' } }],
+        responses: { 200: { description: 'Supplier detail' }, 404: { description: 'Supplier not found' } },
+      },
+    },
+    '/purchase-history': {
+      get: {
+        summary: 'List purchase history',
+        responses: { 200: { description: 'Purchases, newest first' }, 503: { description: 'Purchase history unavailable' } },
+      },
+    },
   },
   components: {
     schemas: {
@@ -107,6 +140,11 @@ module.exports = {
           amount_paid: { type: 'number', exclusiveMinimum: 0, example: 50 },
           note: { type: 'string', nullable: true, example: 'Partial payment' },
         },
+      },
+      ProductPriceUpdate: {
+        type: 'object',
+        required: ['unit_price'],
+        properties: { unit_price: { type: 'number', minimum: 0, example: 25 } },
       },
     },
   },

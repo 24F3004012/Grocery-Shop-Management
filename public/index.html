@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sunanda Stores</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Sunanda Stores home">Sunanda Stores</a>
+      <nav class="topnav" aria-label="Main navigation">
+        <a href="/stock.html"><i class="nav-icon" data-lucide="boxes" aria-hidden="true"></i><span>Stock</span></a>
+        <a href="/suppliers.html"><i class="nav-icon" data-lucide="users-round" aria-hidden="true"></i><span>Suppliers</span></a>
+        <a href="/reports.html"><i class="nav-icon" data-lucide="chart-no-axes-column" aria-hidden="true"></i><span>Reports</span></a>
+        <a href="/profile.html"><i class="nav-icon" data-lucide="user-round" aria-hidden="true"></i><span>Profile</span></a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="welcome-block" aria-labelledby="page-title">
+        <p class="eyebrow">Good morning</p>
+        <h1 id="page-title">A clear view of your store.</h1>
+        <p class="intro">Keep today moving gently, one sale and delivery at a time.</p>
+      </section>
+
+      <section class="cash-panel" aria-labelledby="cash-title">
+        <div class="cash-heading">
+          <i class="line-icon wallet-icon" data-lucide="wallet" aria-hidden="true"></i>
+          <span id="cash-title">Today's cash</span>
+        </div>
+        <div id="today-cash" class="cash-value loading-block" aria-live="polite">&nbsp;</div>
+        <div id="dashboard-date" class="date-value loading-block">&nbsp;</div>
+      </section>
+
+      <section class="quick-actions" aria-label="Quick actions">
+        <a class="action-button primary-action" href="/sale.html">
+          <i class="line-icon" data-lucide="shopping-cart" aria-hidden="true"></i>
+          <span>New sale</span>
+        </a>
+        <a class="action-button secondary-action" href="/purchase.html">
+          <i class="line-icon" data-lucide="truck" aria-hidden="true"></i>
+          <span>New purchase</span>
+        </a>
+      </section>
+
+      <p id="dashboard-error" class="error-message" role="status" hidden></p>
+      <p id="action-message" class="action-message" role="status" hidden></p>
+
+      <section class="status-grid" aria-label="Store status">
+        <article class="status-card peach-card">
+          <div class="status-topline"><i class="line-icon" data-lucide="package-search" aria-hidden="true"></i><span>Low stock</span></div>
+          <strong id="low-stock" class="status-value loading-block">&nbsp;</strong>
+          <span class="status-note">items need a look</span>
+        </article>
+        <article class="status-card lavender-card">
+          <div class="status-topline"><i class="line-icon" data-lucide="badge-dollar-sign" aria-hidden="true"></i><span>Credit outstanding</span></div>
+          <strong id="credit-outstanding" class="status-value loading-block">&nbsp;</strong>
+          <span class="status-note">across your customers</span>
+        </article>
+        <article class="status-card neutral-card">
+          <div class="status-topline"><i class="line-icon" data-lucide="receipt" aria-hidden="true"></i><span>Sales today</span></div>
+          <strong id="sales-count" class="status-value loading-block">&nbsp;</strong>
+          <span class="status-note">completed so far</span>
+        </article>
+      </section>
+    </main>
+  </div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/guard.js"></script><script src="/app.js"></script>
+</body>
+</html>

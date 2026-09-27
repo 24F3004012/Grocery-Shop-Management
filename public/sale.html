@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New sale | Sunanda Stores</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/sale.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/">Sunanda Stores</a>
+      <a class="back-link" href="/"><span aria-hidden="true">←</span> Home</a>
+    </header>
+
+    <main>
+      <div class="page-heading">
+        <p class="eyebrow">Billing sheet</p>
+        <h1>New sale</h1>
+        <p class="intro">Add the basket, take the cash, and let the store keep the final record.</p>
+      </div>
+
+      <form id="sale-form" class="sale-card">
+        <div class="table-heading" aria-hidden="true">
+          <span>Product</span><span>Quantity</span><span>Amount</span><span></span>
+        </div>
+        <div id="sale-rows" class="sale-rows" aria-live="polite">
+          <div class="loading-row"><span></span><span></span><span></span></div>
+        </div>
+        <button id="add-product" class="add-button" type="button" disabled><span aria-hidden="true">+</span> Add product</button>
+
+        <div class="summary-block">
+          <div class="summary-line"><span>Preview total</span><strong id="preview-total">₹0.00</strong></div>
+          <p class="summary-note">The final total comes back from the server after completion.</p>
+          <label class="cash-field" for="cash-received">
+            <span>Cash received</span>
+            <span class="cash-input-wrap"><span aria-hidden="true">₹</span><input id="cash-received" name="cash_received" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00" required></span>
+          </label>
+        </div>
+
+        <p id="sale-error" class="message error-message" role="alert" hidden></p>
+        <p id="sale-status" class="message status-message" role="status" hidden></p>
+        <button id="complete-sale" class="complete-button" type="submit" disabled><i data-lucide="shopping-cart" aria-hidden="true"></i> Complete sale</button>
+      </form>
+
+      <section id="sale-confirmation" class="confirmation-card" hidden aria-live="polite">
+        <div class="confirmation-heading"><i data-lucide="circle-check" aria-hidden="true"></i><span>Sale recorded</span></div>
+        <div class="confirmation-grid">
+          <div><span>Final total</span><strong id="confirmed-total"></strong></div>
+          <div><span>Change given</span><strong id="confirmed-change"></strong></div>
+        </div>
+        <p id="confirmed-time"></p>
+      </section>
+    </main>
+  </div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/guard.js"></script><script src="/sale.js"></script>
+</body>
+</html>

@@ -4,11 +4,17 @@
   "private": true,
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "db:prepare": "node scripts/prepare-migration.js",
+    "db:migrate": "node scripts/run-migration.js",
+    "auth:enable": "node scripts/enable-auth.js"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.3",
     "pg": "^8.13.1",
     "swagger-ui-express": "^5.0.1"
   }

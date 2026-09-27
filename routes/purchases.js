@@ -27,11 +27,13 @@ router.post('/', async (req, res) => {
     const responseItems = [];
     try {
       await client.query('BEGIN');
+      const supplierResult = await client.query('SELECT supplier_id FROM supplier WHERE supplier_id = $1 AND store_id = $2', [supplierId, req.user.store_id]);
+      if (supplierResult.rowCount !== 1) throw new Error('Supplier does not belong to this store.');
       const purchaseResult = await client.query(
-        `INSERT INTO purchase (supplier_id, purchase_date, total_amount)
-         VALUES ($1, $2, $3)
+        `INSERT INTO purchase (store_id, supplier_id, purchase_date, total_amount)
+         VALUES ($1, $2, $3, $4)
          RETURNING purchase_id, purchase_date`,
-        [supplierId, purchaseDate, totalCents / 100],
+        [req.user.store_id, supplierId, purchaseDate, totalCents / 100],
       );
       const purchase = purchaseResult.rows[0];
 
@@ -43,19 +45,19 @@ router.post('/', async (req, res) => {
             throw new Error('New products require product_name, category_id, and unit.');
           }
           const productResult = await client.query(
-            `INSERT INTO product (category_id, name, unit_price, unit)
-             VALUES ($1, $2, $3, $4)
+            `INSERT INTO product (store_id, category_id, name, unit_price, unit)
+             VALUES ($1, $2, $3, $4, $5)
              RETURNING product_id`,
-            [item.category_id, item.product_name, 0, item.unit],
+            [req.user.store_id, item.category_id, item.product_name, 0, item.unit],
           );
           productId = productResult.rows[0].product_id;
           createdNewProduct = true;
         }
 
         await client.query(
-          `INSERT INTO purchase_item (purchase_id, product_id, quantity, unit_cost)
-           VALUES ($1, $2, $3, $4)`,
-          [purchase.purchase_id, productId, item.quantity, item.unit_cost],
+          `INSERT INTO purchase_item (store_id, purchase_id, product_id, quantity, unit_cost)
+           VALUES ($1, $2, $3, $4, $5)`,
+          [req.user.store_id, purchase.purchase_id, productId, item.quantity, item.unit_cost],
         );
         responseItems.push({
           product_id: productId,

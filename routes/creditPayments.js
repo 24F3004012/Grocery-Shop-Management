@@ -16,22 +16,22 @@ router.post('/', async (req, res) => {
   try {
     client = await pool.connect();
     await client.query('BEGIN');
-    const customerResult = await client.query('SELECT customer_id FROM customer WHERE customer_id = $1', [customerId]);
+    const customerResult = await client.query('SELECT customer_id FROM customer WHERE customer_id = $1 AND store_id = $2', [customerId, req.user.store_id]);
     if (customerResult.rowCount !== 1) {
       const error = new Error(`Customer ${customerId} was not found.`);
       error.statusCode = 404;
       throw error;
     }
     const paymentResult = await client.query(
-      `INSERT INTO credit_payment (customer_id, payment_date, amount_paid, note)
-       VALUES ($1, CURRENT_DATE, $2, $3)
+      `INSERT INTO credit_payment (store_id, customer_id, payment_date, amount_paid, note)
+      VALUES ($1, $2, CURRENT_DATE, $3, $4)
        RETURNING payment_id, customer_id, amount_paid, payment_date, note`,
-      [customerId, amountPaid, note],
+      [req.user.store_id, customerId, amountPaid, note],
     );
     const payment = paymentResult.rows[0];
     const balanceResult = await client.query(
-      'SELECT balance_due AS customer_balance_due FROM customer WHERE customer_id = $1',
-      [customerId],
+      'SELECT balance_due AS customer_balance_due FROM customer WHERE customer_id = $1 AND store_id = $2',
+      [customerId, req.user.store_id],
     );
     await client.query('COMMIT');
     return res.status(201).json({
